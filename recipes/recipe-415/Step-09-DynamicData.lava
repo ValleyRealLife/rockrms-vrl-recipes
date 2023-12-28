@@ -1,0 +1,51 @@
+{% assign var_GroupId = PageParameter.GroupId | SanitizeSql %}
+{% if var_GroupId != null %}
+SELECT
+    p.Id
+  , CONCAT(p.NickName, ' ', p.LastName) AS 'Name'
+  , dv1.[Value] AS 'Person Status'
+  , CASE gm.GroupMemberStatus
+        WHEN 0 THEN 'Inactive'
+        WHEN 1 THEN 'Active'
+        WHEN 2 THEN 'Pending'
+    END AS 'Member Status'
+  , CASE p.Gender
+        WHEN 1 THEN 'Male'
+        WHEN 2 THEN 'Female'
+        ELSE 'Unknown'
+    END AS 'Gender'
+  , gtr.Name AS 'Member Role'
+  , dv2.[Value] AS 'Marital Status'
+  , dbo.ufnCrm_GetAge(p.Birthdate) AS 'Age'
+  , pn.NumberFormatted AS 'Mobile Phone'
+  , p.Email
+FROM
+    [GroupMember] gm
+    INNER JOIN [GroupTypeRole] gtr ON gtr.Id = gm.GroupRoleId
+    INNER JOIN [Person] p ON p.Id = gm.PersonId
+    LEFT JOIN [DefinedValue] dv1 ON dv1.Id = p.RecordStatusValueId
+    LEFT JOIN [DefinedValue] dv2 ON dv2.Id = p.MaritalStatusValueId
+    LEFT JOIN [PhoneNumber] pn ON pn.PersonId = p.Id AND pn.NumberTypeValueId=12
+    LEFT JOIN [Campus] c ON c.Id = p.PrimaryCampusId
+WHERE
+    gm.GroupId = {{ var_GroupId }}
+    AND
+    gm.IsArchived=0
+GROUP BY
+    p.Id
+  , p.NickName
+  , p.LastName
+  , dv1.[Value]
+  , gm.GroupMemberStatus
+  , p.Gender
+  , gtr.Name
+  , dv2.[Value]
+  , dbo.ufnCrm_GetAge(p.Birthdate)
+  , pn.NumberFormatted
+  , p.Email
+  , gtr.[Order]
+ORDER BY
+    gtr.[Order]
+  , gm.GroupMemberStatus ASC
+  , p.LastName
+{%endif%}

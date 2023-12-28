@@ -1,0 +1,1 @@
+SELECT dv.[Guid] AS 'Value', dv.[Value] AS 'Text' FROM [DefinedValue] dv WHERE dv.DefinedTypeId = 52;

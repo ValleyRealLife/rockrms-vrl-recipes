@@ -1,0 +1,22 @@
+{% assign var_topic = PageParameter.topic | Sanitize Sql %}
+{% if var_topic != empty %}
+SELECT
+    g.Id AS 'GroupId'
+  , g.Name AS 'Group'
+  , COUNT(DISTINCT CASE WHEN gm.IsArchived = 0 AND gm.GroupMemberStatus = 1 THEN gm.Id END) AS 'Active Members'
+  , COUNT(DISTINCT CASE WHEN gm.IsArchived = 0 AND gm.GroupMemberStatus = 2 THEN gm.Id END) AS 'Pending Members'
+  , av.[Value] AS 'var1'
+FROM
+    [Group] g
+    INNER JOIN [GroupMember] gm ON gm.GroupId = g.Id
+    LEFT JOIN [AttributeValue] av ON av.EntityId = g.Id AND av.AttributeId = 1409
+WHERE
+    av.[Value] = '{{ var_topic }}'
+    AND
+    g.GroupTypeId = 25 AND g.IsActive = 1 AND g.IsArchived = 0
+GROUP BY
+    g.Id
+  , g.Name
+  , av.[Value]
+;
+{% endif %}
