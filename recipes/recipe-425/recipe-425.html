@@ -54,7 +54,7 @@ Table of Contents: <font color="#9c9c94">(someone please teach me how to link to
     <li><b>Tag Name</b>:<br><div style="width: 60%; border: 1px solid #9c9c94; padding-left: 5px; padding-right: 5px;">MatrixToJSON</div></li>
     <li><b>Tag Type</b>:<br><div style="width: 60%; border: 1px solid #9c9c94; padding-left: 5px; padding-right: 5px;">Inline</div></li>
     <li><b>Description</b>:<br><div style="width: 60%; border: 1px solid #9c9c94; padding-left: 5px; padding-right: 5px;">This Lava Shortcode allows you to use Matrix-type attributes the way you thought they would work.</div></li>
-    <li><b>Documentation</b>:<br>(Remember to press the 'Code Editor' button (<i class="fas fa-code"></i>) in order to paste this HTML)<br><iframe frameborder="0" scrolling="no" style="width:100%; height:583px;" allow="clipboard-write" src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2FValleyRealLife%2Frockrms-vrl-recipes%2Fblob%2F11246ecf0cc20e0e0cedab4aff5bc34a64af0a1b%2Frecipes%2Frecipe-425%2FREADME.md&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on"></iframe></li>
+    <li><b>Documentation</b>:<br>(Remember to press the 'Code Editor' button (<i class="fas fa-code"></i>) in order to paste this HTML)<br><iframe frameborder="0" scrolling="no" style="width:100%; height:625px;" allow="clipboard-write" src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2FValleyRealLife%2Frockrms-vrl-recipes%2Fblob%2F8b7814904ff4f33e1ff15e08e25df41b60524e15%2Frecipes%2Frecipe-425%2FREADME.md&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></iframe></li>
     <li><b>Shortcode Markup</b>:<br><iframe frameborder="0" scrolling="no" style="width:100%; height:1612px;" allow="clipboard-write" src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2FValleyRealLife%2Frockrms-vrl-recipes%2Fblob%2F02cf40ab2aad8c3c88a39c7dd0a569f80c8274cd%2Frecipes%2Frecipe-425%2FFromMatrix-toJSON.lava&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on"></iframe></li>
     <li><b>Parameters</b>:<br><span style="width: 30%; border: 1px solid #9c9c94; padding-left: 5px; padding-right: 5px;">‎guid‎</span><span style="width: 30%; border: 1px solid #9c9c94; padding-left: 5px; padding-right: 5px;"><font color="#ffffff">______</font></span></li>
     <li><b>Enabled Lava Commands</b>:<br><div style="width: 60%; border: 1px solid #9c9c94; padding-left: 5px; padding-right: 5px;">Sql</div></li>
@@ -76,6 +76,12 @@ Table of Contents: <font color="#9c9c94">(someone please teach me how to link to
 <p>You could very well copy+paste that RawValue into the Shortcode like this:</p>
 <pre>{[ MatrixToJSON guid:'d330ea78-ce5d-46b9-8b36-11ba81342b47' ]}</pre>
 <p>But it will make your life easier if you could assign that RawValue into a variable and pass the variable instead. Like this:</p>
+<pre>
+{% assign variable_1 = Person | Attribute:'EmergencyContacts_Matrix', 'RawValue' %}
+
+{[ MatrixToJSON guid:'{{ variable_1 }}' ]}
+</pre>
+<p>Then, capture the output of the Shortcode and name your variable. For example, i am capturing it and labeling it as `EmergencyContacts_JSON`:</p>
 <pre>
 {% assign variable_1 = Person | Attribute:'EmergencyContacts_Matrix', 'RawValue' %}
 
