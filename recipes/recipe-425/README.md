@@ -1,3 +1,5 @@
+Rock Community / Recipes / [From Matrix to JSON](https://community.rockrms.com/recipes/425/from-matrix-to-json)
+
 <p>Input the RawValue of a Matrix-Type Attribute (which is the GUID of an AttributeMatrix), the output will be a JSON-formatted string</p>
 
 <p>Example Lava:</p>
