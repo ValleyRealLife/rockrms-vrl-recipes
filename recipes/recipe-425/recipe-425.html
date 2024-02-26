@@ -14,37 +14,37 @@ Prerequisites:
     <li>Be frustrated with the 'Matrix' Field Type</li>
 </ul>
 <hr>
-Table of Contents: <font color="#9c9c94">(someone please teach me how to link to specific h2 elements in this Recipe lol)</font>
+Table of Contents:
 <ol>
-    <li>What<ol><li>Illustration #1</li><li>Illustration #2</li></ol></li>
-    <li>How (general concept)</li>
-    <li>How to Configure</li>
-    <li>How to Use</li>
-    <li>Notes</li>
+    <li><a href="#What">What</a><ul><li><a href="#illustration-1">Illustration #1</a></li><li><a href="#illustration-2">Illustration #2</a></li></ul></li>
+    <li><a href="#How">How (general concept)</a></li>
+    <li><a href="#How-to-Configure">How to Configure</a></li>
+    <li><a href="#How-to-Use">How to Use</a></li>
+    <li><a href="#Notes">Notes</a></li>
 </ol>
 <hr>
-<h2>What</h2>
+<h2 id="What">What</h2>
 <p>This recipe shows how to use Lava in order to convert a "table" stored in a Matrix-type Attribute into a JSON-formatted string. This way, you can use the <a href="https://community.rockrms.com/lava/filters/other-filters#fromjson" target="_blank">FromJSON</a> Filter in order to use the "rows" of the "table" by treating it as an array of "rows".</p>
-<h3>Illustration #1</h3>
+<h3 id="illustration-1">Illustration #1</h3>
 <p>Let's say you have a Person Attribute named "Emergency Contacts" <font color="#9c9c94">(let's say the Attribute Key is EmergencyContacts_Matrix)</font>, and let's say this Attribute is useful for your Youth Ministry to be able to keep track of various Emergency Contacts for each kid.</p>
 <p><img src="/Content/RockExternal/Users/tim.seo/Example_of_Matrix_Attribute_for_Emergency_Contacts.png" alt="Example_of_Matrix_Attribute_for_Emergency_Contacts.png" class="tim-screenshot"></p>
 <p>Let's say that you want to print a PDF packet or write an Email Template that will only include the "first row" of this Matrix.</p>
 <p>With the current way matrices are configured in Rock's Data Model, we can't easily do that. 😓</p><p>But what if we could simply treat the Matrix-type Attribute as an array of rows? 🤔 Then, we could return only the "first row" of this Matrix by writing something like this:</p>
 <figure><img src="/Content/RockExternal/Users/tim.seo/Fake_Lava_that_depicts_how_we_could_treat_Matrices_as_arrays.png" alt="Fake_Lava_that_depicts_how_we_could_treat_Matrices_as_arrays.png" class="tim-screenshot"><br><figcaption>Please note this Lava is not quite accurate, i just wrote some mock-code in order to illustrate the point.</figcaption></figure>
 <p><img src="/Content/RockExternal/Users/tim.seo/Example_Lava_Output.png" alt="Example_Lava_Output.png" class="tim-screenshot" style="width: 30%;"></p>
-<h3>Illustration #2</h3>
+<h3 id="illustration-2">Illustration #2</h3>
 <p>Let's say you have a Person Attribute named "Prescribed Medications" <font color="#9c9c94">(let's say the Attribute Key is Medications_Matrix)</font>, and let's say this Attribute is useful for your Youth Ministry to be able to provide your Summer Camp Nurse with a packet of prescribed medications for each kid that is going to the camp.</p>
 <p><img src="/Content/RockExternal/Users/tim.seo/Example_of_Matrix_Attribute_for_Medications.png" alt="Example_of_Matrix_Attribute_for_Medications.png" class="tim-screenshot"></p>
 <p>If we had the convenience of treating each "row" as an item in an array, we can get really creative with our Lava Templates:</p>
 <figure><img src="/Content/RockExternal/Users/tim.seo/Fake_Lava_that_depicts_how_we_could_treat_Matrices_as_arrays_2.png" alt="Fake_Lava_that_depicts_how_we_could_treat_Matrices_as_arrays_2.png" class="tim-screenshot"><br><figcaption>Please note this Lava is not quite accurate, i just wrote some mock-code in order to illustrate the point.</figcaption></figure>
 <p><img src="/Content/RockExternal/Users/tim.seo/Example_Lava_Output_2.png" alt="Example_Lava_Output_2.png" class="tim-screenshot" style="width: 30%;"></p>
-<h2>How (general concept)</h2>
+<h2 id="How">How (general concept)</h2>
 <ol>
     <li>You can use <a href="https://github.com/ValleyRealLife/rockrms-vrl-recipes/blob/main/recipes/recipe-425/FromMatrix-toJSON.lava" target="_blank">this Lava script</a> in order to transpose the "columns" and "rows" of your Matrix into a JSON string.<ul><li>i recommend making this into an inline-type Lava Shortcode.</li></ul></li>
     <li>Once you have a JSON string, you can use the <a href="https://community.rockrms.com/lava/filters/other-filters#fromjson" target="_blank">FromJSON</a> Filter in order to transform the string into a Lava object.</li>
     <li>Once it is a Lava object, you can proceed with all the Lava tricks in your bag.</li>
 </ol>
-<h2>How to Configure</h2>
+<h2 id="How-to-Configure">How to Configure</h2>
 <p>Step 1: Navigate to Admin Tools &gt; CMS Configuration &gt; Lava Shortcodes, and click the '+' button in order to create a new Shortcode.</p>
 <p><img src="/Content/RockExternal/Users/tim.seo/Create_a_Lava_Shortcode_1.png" alt="Create_a_Lava_Shortcode_1.png" class="tim-screenshot"></p>
 <p>Step 2: Create a Lava Shortcode with these properties:</p>
@@ -61,7 +61,7 @@ Table of Contents: <font color="#9c9c94">(someone please teach me how to link to
 </ul>
 <p>It will look kinda like this:</p>
 <p><img src="/Content/RockExternal/Users/tim.seo/Create_Lava_Shortcode_3.png" alt="Create_Lava_Shortcode_3.png" class="tim-screenshot"></p>
-<h2>How to Use</h2>
+<h2 id="How-to-Use">How to Use</h2>
 <p>Generally speaking, there are three things you want to do when using this JSONificator (JSONifier?).</p>
 <ol>
     <li>Pass the RawValue of a Matrix-type Attribute into the Shortcode</li>
@@ -105,6 +105,6 @@ Table of Contents: <font color="#9c9c94">(someone please teach me how to link to
 <p><img src="/Content/RockExternal/Users/tim.seo/MatrixToJSON_real_example_1.png" alt="MatrixToJSON_real_example_1.png" class="tim-screenshot"></p>
 <p>And we would achieve the use case in Illustration #2 in this way:</p>
 <p><img src="/Content/RockExternal/Users/tim.seo/MatrixToJSON_real_example_2.png" alt="MatrixToJSON_real_example_2.png" class="tim-screenshot"></p>
-<h2>Notes</h2>
+<h2 id="Notes">Notes</h2>
 <a href="https://github.com/ValleyRealLife/rockrms-vrl-recipes/tree/main/recipes/recipe-425" target="_blank">Github Repo for this Recipe</a>
 <p>This Recipe was only possible thanks to the unending patience and knowledge of Ben Murphy and Luke Taylor-- who have always encouraged me to learn and understand. Thanks guys!</p>
