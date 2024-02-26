@@ -1,0 +1,102 @@
+<style>
+    .tim-screenshot {
+        width: 80%;
+        margin: 0 auto;
+        border: 1px solid #DF7D3C;
+    }
+</style>
+
+Prerequisites:
+<ul>
+    <li>Be familiar with Lava and HTML</li>
+    <li><font color="#9c9c94">Be familiar with Lava Shortcodes (optional)</font></li>
+    <li>Be familiar with the difference between Attributes and Properties</li>
+    <li>Be frustrated with the 'Matrix' Field Type</li>
+</ul>
+<hr>
+Table of Contents: <font color="#9c9c94">(someone please teach me how to link to specific h2 elements in this Recipe lol)</font>
+<ol>
+    <li>What<ol><li>Illustration #1</li><li>Illustration #2</li></ol></li>
+    <li>How (general concept)</li>
+    <li>How to Configure</li>
+    <li>How to Use</li>
+</ol>
+<hr>
+<h2>What</h2>
+<p>This recipe shows how to use Lava in order to convert a "table" stored in a Matrix-type Attribute into a JSON-formatted string. This way, you can use the <a href="https://community.rockrms.com/lava/filters/other-filters#fromjson" target="_blank">FromJSON</a> Filter in order to use the "rows" of the "table" by treating it as an array of "rows".</p>
+<h3>Illustration #1</h3>
+<p>Let's say you have a Person Attribute named "Emergency Contacts" <font color="#9c9c94">(let's say the Attribute Key is EmergencyContacts_Matrix)</font>, and let's say this Attribute is useful for your Youth Ministry to be able to keep track of various Emergency Contacts for each kid.</p>
+<p><img src="/Content/RockExternal/Users/tim.seo/Example_of_Matrix_Attribute_for_Emergency_Contacts.png" alt="Example_of_Matrix_Attribute_for_Emergency_Contacts.png" class="tim-screenshot"></p>
+<p>Let's say that you want to print a PDF packet or write an Email Template that will only include the "first row" of this Matrix.</p>
+<p>With the current way matrices are configured in Rock's Data Model, we can't easily do that. 😓</p><p>But what if we could simply treat the Matrix-type Attribute as an array of rows? 🤔 Then, we could return only the "first row" of this Matrix by writing something like this:</p>
+<figure><img src="/Content/RockExternal/Users/tim.seo/Fake_Lava_that_depicts_how_we_could_treat_Matrices_as_arrays.png" alt="Fake_Lava_that_depicts_how_we_could_treat_Matrices_as_arrays.png" class="tim-screenshot"><br><figcaption>Please note this Lava is not quite accurate, i just wrote some mock-code in order to illustrate the point.</figcaption></figure>
+<p><img src="/Content/RockExternal/Users/tim.seo/Example_Lava_Output.png" alt="Example_Lava_Output.png" class="tim-screenshot" style="width: 30%;"></p>
+<h3>Illustration #2</h3>
+<p>Let's say you have a Person Attribute named "Prescribed Medications" <font color="#9c9c94">(let's say the Attribute Key is Medications_Matrix)</font>, and let's say this Attribute is useful for your Youth Ministry to be able to provide your Summer Camp Nurse with a packet of prescribed medications for each kid that is going to the camp.</p>
+<p><img src="/Content/RockExternal/Users/tim.seo/Example_of_Matrix_Attribute_for_Medications.png" alt="Example_of_Matrix_Attribute_for_Medications.png" class="tim-screenshot"></p>
+<p>If we had the convenience of treating each "row" as an item in an array, we can get really creative with our Lava Templates:</p>
+<figure><img src="/Content/RockExternal/Users/tim.seo/Fake_Lava_that_depicts_how_we_could_treat_Matrices_as_arrays_2.png" alt="Fake_Lava_that_depicts_how_we_could_treat_Matrices_as_arrays_2.png" class="tim-screenshot"><br><figcaption>Please note this Lava is not quite accurate, i just wrote some mock-code in order to illustrate the point.</figcaption></figure>
+<p><img src="/Content/RockExternal/Users/tim.seo/Example_Lava_Output_2.png" alt="Example_Lava_Output_2.png" class="tim-screenshot" style="width: 30%;"></p>
+<h2>How (general concept)</h2>
+<ol>
+    <li>You can use <a href="https://github.com/ValleyRealLife/rockrms-vrl-recipes/blob/main/recipes/recipe-425/FromMatrix-toJSON.lava" target="_blank">this Lava script</a> in order to transpose the "columns" and "rows" of your Matrix into a JSON string.<ul><li>i recommend making this into an inline-type Lava Shortcode.</li></ul></li>
+    <li>Once you have a JSON string, you can use the <a href="https://community.rockrms.com/lava/filters/other-filters#fromjson" target="_blank">FromJSON</a> Filter in order to transform the string into a Lava object.</li>
+    <li>Once it is a Lava object, you can proceed with all the Lava tricks in your bag.</li>
+</ol>
+<h2>How to Configure</h2>
+<p>Step 1: Navigate to Admin Tools &gt; CMS Configuration &gt; Lava Shortcodes, and click the '+' button in order to create a new Shortcode.</p>
+<p><img src="/Content/RockExternal/Users/tim.seo/Create_a_Lava_Shortcode_1.png" alt="Create_a_Lava_Shortcode_1.png" class="tim-screenshot"></p>
+<p>Step 2: Create a Lava Shortcode with these properties:</p>
+<ul>
+    <li><b>Name</b>:<br><div style="width: 60%; border: 1px solid #9c9c94; padding-left: 5px; padding-right: 5px;">MatrixToJSON</div></li>
+    <li><b>Active</b>:<br><div style="width: 60%; border: 1px solid #9c9c94; padding-left: 5px; padding-right: 5px;">✅ TRUE</div></li>
+    <li><b>Tag Name</b>:<br><div style="width: 60%; border: 1px solid #9c9c94; padding-left: 5px; padding-right: 5px;">MatrixToJSON</div></li>
+    <li><b>Tag Type</b>:<br><div style="width: 60%; border: 1px solid #9c9c94; padding-left: 5px; padding-right: 5px;">Inline</div></li>
+    <li><b>Description</b>:<br><div style="width: 60%; border: 1px solid #9c9c94; padding-left: 5px; padding-right: 5px;">This Lava Shortcode allows you to use Matrix-type attributes the way you thought they would work.</div></li>
+    <li><b>Documentation</b>:<br>(Remember to press the 'Code Editor' button (<i class="fas fa-code"></i>) in order to paste this HTML)<br><iframe frameborder="0" scrolling="no" style="width:100%; height:583px;" allow="clipboard-write" src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2FValleyRealLife%2Frockrms-vrl-recipes%2Fblob%2F11246ecf0cc20e0e0cedab4aff5bc34a64af0a1b%2Frecipes%2Frecipe-425%2FREADME.md&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on"></iframe></li>
+    <li><b>Shortcode Markup</b>:<br><iframe frameborder="0" scrolling="no" style="width:100%; height:1612px;" allow="clipboard-write" src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2FValleyRealLife%2Frockrms-vrl-recipes%2Fblob%2F02cf40ab2aad8c3c88a39c7dd0a569f80c8274cd%2Frecipes%2Frecipe-425%2FFromMatrix-toJSON.lava&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on"></iframe></li>
+    <li><b>Parameters</b>:<br><span style="width: 30%; border: 1px solid #9c9c94; padding-left: 5px; padding-right: 5px;">‎guid‎</span><span style="width: 30%; border: 1px solid #9c9c94; padding-left: 5px; padding-right: 5px;"><font color="#ffffff">______</font></span></li>
+    <li><b>Enabled Lava Commands</b>:<br><div style="width: 60%; border: 1px solid #9c9c94; padding-left: 5px; padding-right: 5px;">Sql</div></li>
+</ul>
+<p>It will look kinda like this:</p>
+<p><img src="/Content/RockExternal/Users/tim.seo/Create_Lava_Shortcode_3.png" alt="Create_Lava_Shortcode_3.png" class="tim-screenshot"></p>
+<h2>How to Use</h2>
+<p>Generally speaking, there are three things you want to do when using this JSONificator (JSONifier?).</p>
+<ol>
+    <li>Pass the RawValue of a Matrix-type Attribute into the Shortcode</li>
+    <li><a href="https://community.rockrms.com/lava/tags/variable-tags" target="_blank">Capture</a> the output of this Shortcode</li>
+    <li>Use the <a href="https://community.rockrms.com/lava/filters/other-filters#fromjson" target="_blank">FromJSON</a> Filter in order to transform the JSON string into an object</li>
+</ol>
+<p>Let's unpack that a little bit.</p>
+<p>For example, if you have a Matrix-type Person Attribute named "Emergency Contacts", and the key of this attribute is <font style="background-color: rgb(206, 198, 206);" color="#ff0000">EmergencyContacts_Matrix</font>, then this Lava:</p>
+<pre>{{ Person | Attribute:'EmergencyContacts_Matrix', 'RawValue' }}</pre>
+<p>Would return something like this output:</p>
+<pre>d330ea78-ce5d-46b9-8b36-11ba81342b47</pre>
+<p>You could very well copy+paste that RawValue into the Shortcode like this:</p>
+<pre>{[ MatrixToJSON guid:'d330ea78-ce5d-46b9-8b36-11ba81342b47' ]}</pre>
+<p>But it will make your life easier if you could assign that RawValue into a variable and pass the variable instead. Like this:</p>
+<pre>
+{% assign variable_1 = Person | Attribute:'EmergencyContacts_Matrix', 'RawValue' %}
+
+{% capture EmergencyContacts_JSON %}
+{[ MatrixToJSON guid:'{{ variable_1 }}' ]}
+{% endcapture %}
+</pre>
+<p>Lastly, convert this JSON into a Lava object. For example, like this:</p>
+<pre>
+{% assign variable_1 = Person | Attribute:'EmergencyContacts_Matrix', 'RawValue' %}
+
+{% capture EmergencyContacts_JSON %}
+{[ MatrixToJSON guid:'{{ variable_1 }}' ]}
+{% endcapture %}
+
+{% assign EmergencyContacts_Object = EmergencyContacts_JSON | FromJSON %}
+</pre>
+<p>And from here on out, you can take over and use all the Lava tricks you've got in your bag!</p>
+<p>Now that we know the exact way to use this Lava script in order to JSONize Matrix Items, let's revisit Illustration #1 and Illustration #2.</p>
+<p>We would achieve the use case in Illustration #1 in this way:</p>
+<p><img src="/Content/RockExternal/Users/tim.seo/MatrixToJSON_real_example_1.png" alt="MatrixToJSON_real_example_1.png" class="tim-screenshot"></p>
+<p>And we would achieve the use case in Illustration #2 in this way:</p>
+<p><img src="/Content/RockExternal/Users/tim.seo/MatrixToJSON_real_example_2.png" alt="MatrixToJSON_real_example_2.png" class="tim-screenshot"></p>
+<h2>Notes</h2>
+<a href="https://github.com/ValleyRealLife/rockrms-vrl-recipes/tree/02cf40ab2aad8c3c88a39c7dd0a569f80c8274cd/recipes/recipe-425" target="_blank">Github Repo for this Recipe</a>
