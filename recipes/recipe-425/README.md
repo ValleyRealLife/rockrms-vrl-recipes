@@ -1,4 +1,4 @@
-Rock Community / Recipes / [From Matrix to JSON](https://community.rockrms.com/recipes/425/from-matrix-to-json)
+Rock Community / Recipes / <a href="https://community.rockrms.com/recipes/425/from-matrix-to-json" target="_blank">From Matrix to JSON</a>
 <hr>
 <p>Input the RawValue of a Matrix-Type Attribute (which is the GUID of an AttributeMatrix), the output will be a JSON-formatted string</p>
 
