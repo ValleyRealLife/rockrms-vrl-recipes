@@ -62,7 +62,7 @@
             ;
         {%- endsql -%}
         {%- assign attrmat_row_value-size = attrmat_row_value | Size -%}
-            "{{ AttrMat_Col[c] | Property:'Key' }}": "{%- if attrmat_row_value-size > 0 -%}{{ attrmat_row_value[0] | Property:'Value' }}{%- endif -%}"{% if forloop.last != true %},{% endif %}
+            "{{ AttrMat_Col[c] | Property:'Key' }}": {%- if attrmat_row_value-size > 0 -%}{{ attrmat_row_value[0] | Property:'Value' | ToJSON }}{%- endif -%}{% if forloop.last != true %},{% endif %}
     {%- endfor -%}
         }{%- if forloop.last != true -%},{%- endif %}
 {%- endfor -%}
